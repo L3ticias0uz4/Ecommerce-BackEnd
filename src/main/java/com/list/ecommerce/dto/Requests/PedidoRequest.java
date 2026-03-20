@@ -1,4 +1,4 @@
-package com.list.ecommerce.dto.Request;
+package com.list.ecommerce.dto.Requests;
 
 import com.list.ecommerce.entity.StatusDoPedido;
 import com.list.ecommerce.entity.Usuario;

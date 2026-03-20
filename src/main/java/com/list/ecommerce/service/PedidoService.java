@@ -1,5 +1,5 @@
 package com.list.ecommerce.service;
-import com.list.ecommerce.dto.Request.PedidoRequest;
+import com.list.ecommerce.dto.Requests.PedidoRequest;
 import com.list.ecommerce.dto.Response.PedidoResponse;
 import com.list.ecommerce.entity.Pedido;
 import com.list.ecommerce.entity.Usuario;

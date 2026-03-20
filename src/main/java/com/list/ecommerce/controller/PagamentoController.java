@@ -1,7 +1,7 @@
 package com.list.ecommerce.controller;
 
 
-import com.list.ecommerce.dto.Request.PagamentoRequest;
+import com.list.ecommerce.dto.Requests.PagamentoRequest;
 import com.list.ecommerce.dto.Response.PagamentoResponse;
 import com.list.ecommerce.service.PagamentoService;
 import org.springframework.stereotype.Controller;

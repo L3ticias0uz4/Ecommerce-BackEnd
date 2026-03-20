@@ -1,6 +1,6 @@
 package com.list.ecommerce.service;
 
-import com.list.ecommerce.dto.Request.PagamentoRequest;
+import com.list.ecommerce.dto.Requests.PagamentoRequest;
 import com.list.ecommerce.dto.Response.PagamentoResponse;
 import com.list.ecommerce.entity.Pagamento;
 import com.list.ecommerce.repository.PagamentoRepository;

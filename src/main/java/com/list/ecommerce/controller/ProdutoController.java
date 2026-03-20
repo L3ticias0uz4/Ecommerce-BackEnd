@@ -1,6 +1,6 @@
 package com.list.ecommerce.controller;
 
-import com.list.ecommerce.dto.Request.ProdutoRequest;
+import com.list.ecommerce.dto.Requests.ProdutoRequest;
 import com.list.ecommerce.dto.Response.ProdutoResponse;
 import com.list.ecommerce.service.ProdutoService;
 import org.springframework.stereotype.Service;

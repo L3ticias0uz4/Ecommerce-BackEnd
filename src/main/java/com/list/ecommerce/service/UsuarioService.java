@@ -1,6 +1,6 @@
 package com.list.ecommerce.service;
 
-import com.list.ecommerce.dto.Request.UsuarioRequest;
+import com.list.ecommerce.dto.Requests.UsuarioRequest;
 import com.list.ecommerce.dto.Response.UsuarioResponse;
 import com.list.ecommerce.entity.Usuario;
 import com.list.ecommerce.repository.UsuarioRepository;
