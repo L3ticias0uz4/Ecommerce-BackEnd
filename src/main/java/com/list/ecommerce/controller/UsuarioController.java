@@ -1,7 +1,7 @@
 package com.list.ecommerce.controller;
 
-import com.list.ecommerce.dtos.Request.UsuarioRequest;
-import com.list.ecommerce.dtos.Response.UsuarioResponse;
+import com.list.ecommerce.dto.Request.UsuarioRequest;
+import com.list.ecommerce.dto.Response.UsuarioResponse;
 import com.list.ecommerce.service.UsuarioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,7 @@
-package com.list.ecommerce.dtos.Response;
+package com.list.ecommerce.dto.Request;
 
 import com.list.ecommerce.entity.StatusDoPedido;
+import com.list.ecommerce.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +11,12 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PedidoResponse {
+@AllArgsConstructor
+public class PedidoRequest {
 
-    private long idPedido;
+    private Usuario cliente;
     private Instant MomentoPedido;
-    private StatusDoPedido Status;
+    private StatusDoPedido status;
+
 }

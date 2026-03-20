@@ -1,8 +1,8 @@
 package com.list.ecommerce.controller;
 
 
-import com.list.ecommerce.dtos.Request.PagamentoRequest;
-import com.list.ecommerce.dtos.Response.PagamentoResponse;
+import com.list.ecommerce.dto.Request.PagamentoRequest;
+import com.list.ecommerce.dto.Response.PagamentoResponse;
 import com.list.ecommerce.service.PagamentoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

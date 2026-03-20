@@ -1,7 +1,7 @@
 package com.list.ecommerce.service;
 
-import com.list.ecommerce.dtos.Request.PagamentoRequest;
-import com.list.ecommerce.dtos.Response.PagamentoResponse;
+import com.list.ecommerce.dto.Request.PagamentoRequest;
+import com.list.ecommerce.dto.Response.PagamentoResponse;
 import com.list.ecommerce.entity.Pagamento;
 import com.list.ecommerce.repository.PagamentoRepository;
 import org.springframework.stereotype.Service;

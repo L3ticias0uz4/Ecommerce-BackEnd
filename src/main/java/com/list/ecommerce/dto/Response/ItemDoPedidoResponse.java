@@ -1,4 +1,4 @@
-package com.list.ecommerce.dtos.Response;
+package com.list.ecommerce.dto.Response;
 
 import com.list.ecommerce.entity.ItemDoPedido;
 import lombok.AllArgsConstructor;

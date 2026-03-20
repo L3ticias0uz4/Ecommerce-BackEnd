@@ -1,4 +1,4 @@
-package com.list.ecommerce.dtos.Response;
+package com.list.ecommerce.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
