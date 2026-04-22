@@ -1,4 +1,5 @@
 package com.list.ecommerce.entity;
+import com.list.ecommerce.enums.StatusDoPedido;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

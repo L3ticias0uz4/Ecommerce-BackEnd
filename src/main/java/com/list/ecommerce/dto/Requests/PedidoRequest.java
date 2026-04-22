@@ -1,6 +1,6 @@
 package com.list.ecommerce.dto.Requests;
 
-import com.list.ecommerce.entity.StatusDoPedido;
+import com.list.ecommerce.enums.StatusDoPedido;
 import com.list.ecommerce.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
