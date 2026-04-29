@@ -1,5 +1,6 @@
 package com.list.ecommerce.entity;
 
+import com.list.ecommerce.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
+
     @Enumerated(EnumType.STRING)
     private Role roles;
 
