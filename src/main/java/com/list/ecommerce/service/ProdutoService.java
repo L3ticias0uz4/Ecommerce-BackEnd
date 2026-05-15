@@ -17,7 +17,6 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    //Post
     public ProdutoResponse criarProduto(ProdutoRequest produtoRequest){
         Optional<Produto>produtoExistente = produtoRepository.findByNomeProduto(produtoRequest.getNomeProduto());
 
@@ -43,7 +42,7 @@ public class ProdutoService {
         return produtoResponse;
     }
 
-    //Get All
+
     public List<ProdutoResponse> listarProdutos(){
 
         List<Produto> produtos = produtoRepository.findAll();
@@ -58,8 +57,6 @@ public class ProdutoService {
     }
 
 
-    //Get by id
-
     public ProdutoResponse listarporId(Integer id){
 
         Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
@@ -72,14 +69,12 @@ public class ProdutoService {
                 produto.getImgUrl()
         );
     }
-    //Delete
     public void deletarProduto(Integer id){
         Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
         produtoRepository.delete(produto);
 
     }
 
-    //Put
     public ProdutoResponse atualizarProduto(Integer id, ProdutoRequest produtoRequest){
         Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
 
