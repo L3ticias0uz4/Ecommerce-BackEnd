@@ -13,56 +13,23 @@ import java.util.Optional;
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+
     public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
 
-    //Post
-    public ProdutoResponse criarProduto(ProdutoRequest produtoRequest){
-        Optional<Produto>produtoExistente = produtoRepository.findByNomeProduto(produtoRequest.getNomeProduto());
-
-        if(produtoExistente.isPresent()){
+    public ProdutoResponse criarProduto(ProdutoRequest produtoRequest, String caminhoImagem) {
+        Optional<Produto> produtoExistente = produtoRepository.findByNomeProduto(produtoRequest.getNomeProduto());
+        if (produtoExistente.isPresent()) {
             throw new RuntimeException("Produto existente");
         }
 
         Produto produto = new Produto();
-        produto.setNomeProduto(produto.getNomeProduto());
+        produto.setNomeProduto(produtoRequest.getNomeProduto());
         produto.setDescricaoProduto(produtoRequest.getDescricaoProduto());
         produto.setPreco(produtoRequest.getPreco());
-        produto.setImgUrl(produtoRequest.getImgUrl());
-
-        ProdutoResponse produtoResponse = new ProdutoResponse(
-
-                produto.getIdProduto(),
-                produto.getNomeProduto(),
-                produto.getDescricaoProduto(),
-                produto.getPreco(),
-                produto.getImgUrl()
-        );
-
-        return produtoResponse;
-    }
-
-    //Get All
-    public List<ProdutoResponse> listarProdutos(){
-
-        List<Produto> produtos = produtoRepository.findAll();
-        return produtos.stream().map(
-                produto -> new ProdutoResponse(
-                        produto.getIdProduto(),
-                        produto.getNomeProduto(),
-                        produto.getDescricaoProduto(),
-                        produto.getPreco(),
-                        produto.getImgUrl()
-                )).toList();
-    }
-
-
-    //Get by id
-
-    public ProdutoResponse listarporId(Integer id){
-
-        Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
+        produto.setImgUrl(caminhoImagem);
+        produtoRepository.save(produto);
 
         return new ProdutoResponse(
                 produto.getIdProduto(),
@@ -72,32 +39,54 @@ public class ProdutoService {
                 produto.getImgUrl()
         );
     }
-    //Delete
-    public void deletarProduto(Integer id){
-        Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
-        produtoRepository.delete(produto);
 
-    }
-
-    //Put
-    public ProdutoResponse atualizarProduto(Integer id, ProdutoRequest produtoRequest){
-        Produto produto = produtoRepository.findById(id).orElseThrow(()-> new RuntimeException("Produto não encontrado"));
-
-        produto.setNomeProduto(produtoRequest.getNomeProduto());
-        produto.setDescricaoProduto(produtoRequest.getDescricaoProduto());
-        produto.setPreco(produtoRequest.getPreco());
-        produto.setImgUrl(produtoRequest.getImgUrl());
-        produtoRepository.save(produto);
-
-        ProdutoResponse produtoResponse = new ProdutoResponse(
+    public List<ProdutoResponse> listarProdutos() {
+        List<Produto> produtos = produtoRepository.findAll();
+        return produtos.stream().map(produto -> new ProdutoResponse(
                 produto.getIdProduto(),
                 produto.getNomeProduto(),
                 produto.getDescricaoProduto(),
                 produto.getPreco(),
                 produto.getImgUrl()
+        )).toList();
+    }
 
+    public ProdutoResponse listarporId(Integer id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        return new ProdutoResponse(
+                produto.getIdProduto(),
+                produto.getNomeProduto(),
+                produto.getDescricaoProduto(),
+                produto.getPreco(),
+                produto.getImgUrl()
         );
-        return produtoResponse;
+    }
 
+    public void deletarProduto(Integer id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        produtoRepository.delete(produto);
+    }
+
+    public ProdutoResponse atualizarProduto(Integer id, ProdutoRequest produtoRequest, String caminhoImagem) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        produto.setNomeProduto(produtoRequest.getNomeProduto());
+        produto.setDescricaoProduto(produtoRequest.getDescricaoProduto());
+        produto.setPreco(produtoRequest.getPreco());
+        if (caminhoImagem != null && !caminhoImagem.isBlank()) {
+            produto.setImgUrl(caminhoImagem);
+        }
+
+        produtoRepository.save(produto);
+
+        return new ProdutoResponse(
+                produto.getIdProduto(),
+                produto.getNomeProduto(),
+                produto.getDescricaoProduto(),
+                produto.getPreco(),
+                produto.getImgUrl()
+        );
     }
 }
