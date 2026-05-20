@@ -2,10 +2,13 @@ package com.list.ecommerce.controller;
 
 import com.list.ecommerce.dto.Requests.UsuarioRequest;
 import com.list.ecommerce.dto.Response.UsuarioResponse;
+import com.list.ecommerce.service.PhotoService;
 import com.list.ecommerce.service.UsuarioService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -13,32 +16,71 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final PhotoService photoService;
 
-    public UsuarioController( UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, PhotoService photoService) {
         this.usuarioService = usuarioService;
+        this.photoService = photoService;
     }
+
     @PostMapping("/Usuario")
-    public UsuarioResponse criarUsuario(@RequestBody UsuarioRequest usuarioRequest){
+    public ResponseEntity<UsuarioResponse> criarUsuario(
+            @RequestParam String nome,
+            @RequestParam String email,
+            @RequestParam String senha,
+            @RequestParam(required = false) String telefone,
+            @RequestParam(required = false) MultipartFile foto) throws IOException {
 
-        return usuarioService.criarUsuario(usuarioRequest);
-    }
-    @PutMapping("/Usuario{id}")
-    public UsuarioResponse atualizarUsuario(@RequestBody UsuarioRequest usuarioRequest,@PathVariable Integer id){
+        UsuarioRequest usuarioRequest = new UsuarioRequest();
+        usuarioRequest.setNome(nome);
+        usuarioRequest.setEmail(email);
+        usuarioRequest.setSenha(senha);
+        usuarioRequest.setTelefone(telefone);
 
-        return usuarioService.atualizarUsuario(id, usuarioRequest);
-    }
-    @GetMapping("/Usuarios{id}")
-    public UsuarioResponse listarUsuarios(@PathVariable Integer id){
+        String caminhoFoto = null;
+        if (foto != null && !foto.isEmpty()) {
+            caminhoFoto = photoService.salvarFoto(foto);
+        }
 
-        return usuarioService.listarUsuarios(id);
+        return ResponseEntity.ok(usuarioService.criarUsuario(usuarioRequest, caminhoFoto));
     }
-    @GetMapping("/Usuarios")
-    public List<UsuarioResponse> listarTodosUsuarios(@PathVariable Integer id){
-        return usuarioService.listarTodosUsuarios();
+
+    @PutMapping("/Usuario/{id}")
+    public ResponseEntity<UsuarioResponse> atualizarUsuario(
+            @PathVariable Integer id,
+            @RequestParam String nome,
+            @RequestParam String email,
+            @RequestParam String senha,
+            @RequestParam(required = false) String telefone,
+            @RequestParam(required = false) MultipartFile foto) throws IOException {
+
+        UsuarioRequest usuarioRequest = new UsuarioRequest();
+        usuarioRequest.setNome(nome);
+        usuarioRequest.setEmail(email);
+        usuarioRequest.setSenha(senha);
+        usuarioRequest.setTelefone(telefone);
+
+        String caminhoFoto = null;
+        if (foto != null && !foto.isEmpty()) {
+            caminhoFoto = photoService.salvarFoto(foto);
+        }
+
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(id, usuarioRequest, caminhoFoto));
     }
-    @DeleteMapping("/Usuario{id}")
-    public void deletarUsuario(@PathVariable Integer id){
+
+    @GetMapping("/Usuario/{id}")
+    public ResponseEntity<UsuarioResponse> listarUsuarios(@PathVariable Integer id) {
+        return ResponseEntity.ok(usuarioService.listarUsuarios(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioResponse>> listarTodosUsuarios() {
+        return ResponseEntity.ok(usuarioService.listarTodosUsuarios());
+    }
+
+    @DeleteMapping("/Usuario/{id}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Integer id) {
         usuarioService.deletarUsuario(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

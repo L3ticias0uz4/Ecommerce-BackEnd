@@ -6,12 +6,12 @@ import com.list.ecommerce.entity.Usuario;
 import com.list.ecommerce.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsuarioService {
-
 
     private final UsuarioRepository usuarioRepository;
 
@@ -19,30 +19,27 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    //Post
-    public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
+    public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest, String caminhoFoto) {
         Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuarioRequest.getEmail());
         if (usuarioExistente.isPresent()) {
-            throw new RuntimeException("Email ja registrado");
+            throw new RuntimeException("Email já registrado");
         }
         Usuario usuario = new Usuario();
         usuario.setEmail(usuarioRequest.getEmail());
         usuario.setNome(usuarioRequest.getNome());
         usuario.setTelefone(usuarioRequest.getTelefone());
         usuario.setSenha(usuarioRequest.getSenha());
-        usuario.setRoles(usuarioRequest.getRoles());
+        usuario.setFoto(caminhoFoto);
         usuarioRepository.save(usuario);
 
-        UsuarioResponse usuarioResponse = new UsuarioResponse(
+        return new UsuarioResponse(
                 usuario.getId(),
-                usuario.getTelefone(),
                 usuario.getNome(),
                 usuario.getEmail(),
+                usuario.getTelefone(),
+                usuario.getFoto(),
                 usuario.getPedidos()
         );
-        return usuarioResponse;
-
-
     }
 
     public List<UsuarioResponse> listarTodosUsuarios() {
@@ -52,43 +49,48 @@ public class UsuarioService {
                 usuario.getNome(),
                 usuario.getEmail(),
                 usuario.getTelefone(),
+                usuario.getFoto(),
                 usuario.getPedidos()
         )).toList();
     }
 
     public UsuarioResponse listarUsuarios(Integer id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
-        
         return new UsuarioResponse(
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
                 usuario.getTelefone(),
+                usuario.getFoto(),
                 usuario.getPedidos()
         );
     }
 
     public void deletarUsuario(Integer id) {
-
-     Usuario usuario =  usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
-     usuarioRepository.delete(usuario);
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+        usuarioRepository.delete(usuario);
     }
 
-    public UsuarioResponse atualizarUsuario(Integer id,UsuarioRequest usuarioRequest) {
-
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
+    public UsuarioResponse atualizarUsuario(Integer id, UsuarioRequest usuarioRequest, String caminhoFoto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
         usuario.setNome(usuarioRequest.getNome());
         usuario.setEmail(usuarioRequest.getEmail());
         usuario.setTelefone(usuarioRequest.getTelefone());
         usuario.setSenha(usuarioRequest.getSenha());
-        UsuarioResponse usuarioResponse = new UsuarioResponse(
+        if (caminhoFoto != null && !caminhoFoto.isBlank()) {
+            usuario.setFoto(caminhoFoto);
+        }
+        usuarioRepository.save(usuario);
+
+        return new UsuarioResponse(
                 usuario.getId(),
                 usuario.getNome(),
-                usuario.getTelefone(),
                 usuario.getEmail(),
+                usuario.getTelefone(),
+                usuario.getFoto(),
                 usuario.getPedidos()
         );
-          return usuarioResponse;
     }
-
 }

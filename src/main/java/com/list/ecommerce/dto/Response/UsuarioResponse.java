@@ -17,5 +17,6 @@ public class UsuarioResponse {
     private String nome;
     private String email;
     private String telefone;
-    private List Pedidos;
+    private String foto;
+    private List pedidos;
 }

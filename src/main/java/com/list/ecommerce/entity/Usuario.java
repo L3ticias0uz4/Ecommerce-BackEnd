@@ -24,14 +24,11 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
+    private String foto;
 
     @Enumerated(EnumType.STRING)
     private Role roles;
 
     @OneToMany(mappedBy = "cliente")
-    private List<Pedido> pedidos = new
-            ArrayList<>();
-
-    public void setRoles(javax.management.relation.Role roles) {
-    }
+    private List<Pedido> pedidos = new ArrayList<>();
 }
