@@ -35,12 +35,12 @@ public class ProdutoController {
         produtoRequest.setDescricaoProduto(descricaoProduto);
         produtoRequest.setPreco(preco);
 
-        String caminhoImagem = null;
+        String caminhoDaImagem = null;
         if (imagem != null && !imagem.isEmpty()) {
-            caminhoImagem = photoService.salvarFoto(imagem);
+            caminhoDaImagem = photoService.salvarFoto(imagem);
         }
 
-        return ResponseEntity.ok(produtoService.criarProduto(produtoRequest, caminhoImagem));
+        return ResponseEntity.ok(produtoService.criarProduto(produtoRequest, caminhoDaImagem));
     }
 
     @GetMapping("/Produtos")

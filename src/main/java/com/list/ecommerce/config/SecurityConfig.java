@@ -22,6 +22,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/Pagamento").permitAll()
+                        .requestMatchers("/Produto").hasRole("ADMIN")
+                        .requestMatchers("/Pedido").permitAll()
+
                         .anyRequest().authenticated()
                 ).httpBasic(withDefaults());
         return http.build();
